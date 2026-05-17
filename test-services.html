@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test services sync</title>
+<style>
+  body { font-family: sans-serif; padding: 30px; max-width: 500px; margin: 0 auto; }
+  button { padding: 12px 20px; font-size: 1rem; border-radius: 8px; border: none; background: #7c4dff; color: white; cursor: pointer; width: 100%; margin-bottom: 10px; }
+  .result { padding: 12px; border-radius: 8px; margin-top: 8px; font-size: 0.9rem; }
+  .ok { background: #e8f5e9; color: #1a8055; }
+  .err { background: #fff0f3; color: #c0305a; }
+  .wait { background: #f5f0ff; color: #7c4dff; }
+</style>
+</head>
+<body>
+<h2>🔍 Test de connexion</h2>
+<p style="color:#666;margin-bottom:20px;">Clique sur chaque bouton pour voir lequel fonctionne depuis ton navigateur.</p>
+
+<button onclick="testJsonBlob()">Tester JSONBlob</button>
+<div id="r1"></div>
+
+<button onclick="testKvdb()" style="margin-top:16px;">Tester KVDB</button>
+<div id="r2"></div>
+
+<button onclick="testBin()" style="margin-top:16px;">Tester Bin.sh</button>
+<div id="r3"></div>
+
+<script>
+async function show(id, ok, msg) {
+  document.getElementById(id).innerHTML = `<div class="result ${ok?'ok':'err'}">${ok?'✅':'❌'} ${msg}</div>`;
+}
+
+async function testJsonBlob() {
+  show('r1','','⏳ Test en cours...');
+  document.getElementById('r1').innerHTML = '<div class="result wait">⏳ Test en cours...</div>';
+  try {
+    const r = await fetch('https://jsonblob.com/api/jsonBlob', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ test: 1 })
+    });
+    if (r.ok) show('r1', true, 'JSONBlob fonctionne ! ✨');
+    else show('r1', false, `JSONBlob erreur ${r.status}`);
+  } catch(e) { show('r1', false, 'JSONBlob bloqué : ' + e.message); }
+}
+
+async function testKvdb() {
+  document.getElementById('r2').innerHTML = '<div class="result wait">⏳ Test en cours...</div>';
+  const key = 'test-stage-' + Date.now();
+  try {
+    const r = await fetch(`https://kvdb.io/9GbAHpXmFMsrPNb38GvhWd/${key}`, {
+      method: 'PUT',
+      body: 'hello'
+    });
+    if (r.ok) show('r2', true, 'KVDB fonctionne ! ✨');
+    else show('r2', false, `KVDB erreur ${r.status}`);
+  } catch(e) { show('r2', false, 'KVDB bloqué : ' + e.message); }
+}
+
+async function testBin() {
+  document.getElementById('r3').innerHTML = '<div class="result wait">⏳ Test en cours...</div>';
+  try {
+    const r = await fetch('https://api.paste.rs', {
+      method: 'POST',
+      body: 'test123'
+    });
+    if (r.ok) {
+      const txt = await r.text();
+      show('r3', true, 'Paste.rs fonctionne ! ID: ' + txt.trim());
+    } else show('r3', false, `Paste.rs erreur ${r.status}`);
+  } catch(e) { show('r3', false, 'Paste.rs bloqué : ' + e.message); }
+}
+</script>
+</body>
+</html>
