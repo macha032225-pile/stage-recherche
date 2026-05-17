@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage Recherche ✏️</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose-50: #fff0f5;
+    --rose-100: #ffdee9;
+    --rose-200: #ffb3cc;
+    --rose-300: #ff80aa;
+    --rose-400: #ff4d88;
+    --rose-500: #e91e63;
+    --violet-50: #f5f0ff;
+    --violet-100: #ede0ff;
+    --violet-200: #d4b8ff;
+    --violet-300: #b98eff;
+    --violet-400: #9c6fff;
+    --violet-500: #7c4dff;
+    --violet-600: #651fff;
+    --lavender: #e8deff;
+    --mint: #f0fff4;
+    --cream: #fffbf5;
+    --text-dark: #3d2c4e;
+    --text-mid: #6b5b80;
+    --text-light: #9e8bac;
+    --white: #ffffff;
+    --shadow-soft: 0 4px 20px rgba(124,77,255,0.08);
+    --shadow-card: 0 2px 16px rgba(124,77,255,0.10);
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff0f5 0%, #f5f0ff 50%, #fce4ec 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #ffe0ec 0%, #ede0ff 100%);
+    border-bottom: 2px solid #f3d0e7;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 16px rgba(180,100,200,0.10);
+    position: sticky; top: 0; z-index: 100;
+  }
+  header .logo-emoji { font-size: 2rem; }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 0.01em;
+  }
+  header .sub { font-size: 0.82rem; color: var(--text-mid); margin-top: 1px; }
+  header .header-emojis { margin-left: auto; font-size: 1.3rem; display: flex; gap: 6px; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 4px;
+    padding: 12px 24px 0;
+    flex-wrap: wrap;
+    background: transparent;
+  }
+  .tab-btn {
+    padding: 9px 18px;
+    border-radius: 14px 14px 0 0;
+    border: 2px solid transparent;
+    background: rgba(255,255,255,0.6);
+    color: var(--text-mid);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { background: var(--rose-100); color: var(--text-dark); }
+  .tab-btn.active {
+    background: white;
+    color: var(--violet-500);
+    border-color: var(--violet-200);
+    border-bottom-color: white;
+    box-shadow: 0 -2px 10px rgba(124,77,255,0.08);
+  }
+  .tab-label-detail { font-size: 0.70rem; color: var(--text-light); display: block; font-weight: 500; margin-top: 1px; }
+
+  /* MAIN */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 0 0 var(--radius) var(--radius);
+    border: 2px solid var(--violet-200);
+    border-top: none;
+    min-height: 80vh;
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--rose-50);
+    border: 1.5px solid var(--rose-100);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-soft);
+  }
+  .card-violet {
+    background: var(--violet-50);
+    border-color: var(--violet-100);
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--violet-500);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* BUTTONS */
+  .btn {
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose-300), var(--violet-400));
+    color: white;
+    box-shadow: 0 3px 12px rgba(124,77,255,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(124,77,255,0.35); }
+  .btn-secondary {
+    background: var(--lavender);
+    color: var(--violet-600);
+    border: 1.5px solid var(--violet-200);
+  }
+  .btn-secondary:hover { background: var(--violet-100); }
+  .btn-danger {
+    background: #fff0f3;
+    color: #e05070;
+    border: 1.5px solid #ffc0cc;
+  }
+  .btn-danger:hover { background: #ffe0e8; }
+  .btn-sm { padding: 5px 12px; font-size: 0.80rem; border-radius: 7px; }
+  .btn-export {
+    background: linear-gradient(135deg, #ffd6e7, #e8d5ff);
+    color: var(--text-dark);
+    border: 1.5px solid var(--rose-200);
+  }
+  .btn-export:hover { background: linear-gradient(135deg, #ffb3cc, #d4b8ff); }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 0.82rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.04em; }
+  .form-control {
+    padding: 9px 13px;
+    border: 1.5px solid var(--rose-200);
+    border-radius: var(--radius-sm);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    background: white;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .form-control:focus { border-color: var(--violet-400); box-shadow: 0 0 0 3px rgba(124,77,255,0.10); }
+  select.form-control { cursor: pointer; }
+  textarea.form-control { min-height: 100px; resize: vertical; }
+
+  /* RICH TEXT EDITOR */
+  .rich-editor {
+    border: 1.5px solid var(--rose-200);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .rich-toolbar {
+    background: var(--rose-50);
+    border-bottom: 1.5px solid var(--rose-200);
+    padding: 6px 10px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .rich-toolbar button {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: white;
+    font-size: 0.80rem;
+    cursor: pointer;
+    color: var(--text-mid);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.12s;
+  }
+  .rich-toolbar button:hover { background: var(--violet-100); color: var(--violet-600); border-color: var(--violet-200); }
+  .rich-content {
+    min-height: 150px;
+    padding: 12px 14px;
+    outline: none;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: white;
+  }
+  .rich-content:empty:before { content: attr(data-placeholder); color: var(--text-light); }
+
+  /* CALENDAR */
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .cal-nav { display: flex; align-items: center; gap: 10px; }
+  .cal-nav button {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid var(--violet-200);
+    background: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--violet-500);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.13s;
+  }
+  .cal-nav button:hover { background: var(--violet-100); }
+  .cal-month-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    min-width: 180px;
+    text-align: center;
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-day-header {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-light);
+    text-transform: uppercase;
+    padding: 6px 0;
+  }
+  .cal-day {
+    min-height: 80px;
+    background: white;
+    border: 1.5px solid var(--rose-100);
+    border-radius: 10px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.13s;
+    position: relative;
+  }
+  .cal-day:hover { background: var(--rose-50); border-color: var(--rose-200); }
+  .cal-day.today { border-color: var(--violet-300); background: var(--violet-50); }
+  .cal-day.other-month { opacity: 0.4; }
+  .cal-day-num {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 3px;
+  }
+  .cal-day.today .cal-day-num { color: var(--violet-500); }
+  .cal-event {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  .cal-event.type-t1 { background: #ffe0e8; color: #c0305a; }
+  .cal-event.type-t2 { background: #e8d5ff; color: #6b35c0; }
+  .cal-event.type-t3 { background: #ffd6a0; color: #a05010; }
+  .cal-event.type-seance { background: #d0f5e8; color: #1a8055; }
+  .cal-event.type-custom { background: #e0f0ff; color: #1a60a0; }
+
+  /* PARTICIPANT LIST */
+  .participant-card {
+    background: white;
+    border: 1.5px solid var(--rose-200);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.15s;
+  }
+  .participant-card:hover { box-shadow: 0 4px 20px rgba(180,100,200,0.15); transform: translateY(-1px); }
+  .participant-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose-200), var(--violet-300));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .participant-info { flex: 1; }
+  .participant-name { font-weight: 800; color: var(--text-dark); font-size: 1rem; }
+  .participant-meta { font-size: 0.80rem; color: var(--text-light); margin-top: 2px; }
+  .participant-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  .badge-eximp { background: #ffe0e8; color: #c0305a; }
+  .badge-impex { background: #e8d5ff; color: #6b35c0; }
+  .participant-actions { display: flex; gap: 6px; }
+
+  /* AGE DISPLAY */
+  .age-display {
+    background: linear-gradient(135deg, var(--rose-50), var(--violet-50));
+    border: 1.5px solid var(--violet-100);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    color: var(--violet-600);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* SUB TABS */
+  .sub-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .sub-tab-btn {
+    padding: 7px 16px;
+    border-radius: 30px;
+    border: 1.5px solid var(--rose-200);
+    background: white;
+    color: var(--text-mid);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sub-tab-btn:hover { background: var(--rose-50); }
+  .sub-tab-btn.active {
+    background: linear-gradient(135deg, var(--rose-200), var(--violet-200));
+    color: var(--text-dark);
+    border-color: var(--violet-300);
+  }
+  .sub-section { display: none; }
+  .sub-section.active { display: block; }
+
+  /* SEANCE CARD */
+  .seance-info-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--lavender);
+    color: var(--violet-600);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: 0.03em;
+  }
+  .seance-items-tag {
+    font-family: 'Courier New', monospace;
+    background: white;
+    border: 1.5px solid var(--violet-200);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: var(--violet-600);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(60,20,90,0.35);
+    backdrop-filter: blur(4px);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: var(--radius);
+    padding: 28px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(124,77,255,0.25);
+    border: 2px solid var(--violet-100);
+    position: relative;
+  }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 18px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--rose-100);
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.13s;
+  }
+  .modal-close:hover { background: var(--rose-200); color: var(--text-dark); }
+  .modal-footer { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+  }
+  .empty-state .empty-emoji { font-size: 3rem; margin-bottom: 10px; }
+  .empty-state p { font-size: 0.95rem; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* DIVIDER */
+  .divider { height: 1.5px; background: linear-gradient(90deg, var(--rose-100), var(--violet-100), transparent); margin: 18px 0; border-radius: 2px; }
+
+  /* INLINE EDIT */
+  .field-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .field-label { font-size: 0.80rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; width: 130px; flex-shrink: 0; }
+  .field-value { font-size: 0.92rem; color: var(--text-dark); flex: 1; }
+
+  /* TOAST */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: linear-gradient(135deg, var(--rose-300), var(--violet-400));
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    box-shadow: 0 6px 20px rgba(124,77,255,0.35);
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  /* PRINT STYLES */
+  @media print {
+    header, nav { display: none !important; }
+    .btn { display: none !important; }
+    main { box-shadow: none; border: none; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--violet-200); border-radius: 3px; }
+
+  .participants-multi {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+  }
+  .participant-chip {
+    background: var(--lavender);
+    color: var(--violet-600);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.80rem;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .participant-chip .remove-chip {
+    cursor: pointer; color: var(--violet-400); font-size: 0.9rem; line-height: 1;
+    border: none; background: none; padding: 0;
+  }
+  .participant-chip .remove-chip:hover { color: #e05070; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-emoji">🏫</div>
+  <div>
+    <h1>Stage Recherche</h1>
+    <div class="sub">École Maternelle Roberty · Nancy · Linguistique</div>
+  </div>
+  <div class="header-emojis" style="display:flex;align-items:center;gap:10px;">
+    <span>✏️ 🧩 🧸</span>
+    <button onclick="openSyncModal()" style="background:rgba(255,255,255,0.75);border:1.5px solid #d4b8ff;border-radius:20px;padding:5px 14px;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;color:#3d2c4e;">
+      🔗 <span id="syncStatus">📴 Local</span>
+    </button>
+  </div>
+</header>
+
+<nav id="mainNav">
+  <button class="tab-btn active" onclick="showTab('calendrier')">📅 Calendrier</button>
+  <button class="tab-btn" onclick="showTab('participants')">👶 Infos Participant</button>
+  <button class="tab-btn" onclick="showTab('t1')">📝 T1</button>
+  <button class="tab-btn" onclick="showTab('seances1')">🎯 Séances<span class="tab-label-detail">entre T1 et T2</span></button>
+  <button class="tab-btn" onclick="showTab('t2')">📝 T2</button>
+  <button class="tab-btn" onclick="showTab('seances2')">🎯 Séances<span class="tab-label-detail">entre T2 et T3</span></button>
+  <button class="tab-btn" onclick="showTab('t3')">📝 T3</button>
+</nav>
+
+<div style="max-width:1200px;margin:0 auto;">
+<main>
+
+  <!-- ===================== CALENDRIER ===================== -->
+  <section id="tab-calendrier" class="section active">
+    <div class="section-header">
+      <div class="section-title">📅 Calendrier</div>
+      <div class="section-actions">
+        <button class="btn btn-primary" onclick="openAddEventModal()">➕ Ajouter un événement</button>
+      </div>
+    </div>
+    <div class="calendar-header">
+      <div class="cal-nav">
+        <button onclick="calPrev()">‹</button>
+        <div class="cal-month-title" id="calTitle"></div>
+        <button onclick="calNext()">›</button>
+      </div>
+      <div style="font-size:0.80rem;color:var(--text-light);display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="background:#ffe0e8;color:#c0305a;padding:2px 8px;border-radius:4px;font-weight:700;">T1/2/3</span>
+        <span style="background:#d0f5e8;color:#1a8055;padding:2px 8px;border-radius:4px;font-weight:700;">Séance</span>
+        <span style="background:#e0f0ff;color:#1a60a0;padding:2px 8px;border-radius:4px;font-weight:700;">Personnalisé</span>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid">
+      <div class="cal-day-header">Lun</div>
+      <div class="cal-day-header">Mar</div>
+      <div class="cal-day-header">Mer</div>
+      <div class="cal-day-header">Jeu</div>
+      <div class="cal-day-header">Ven</div>
+      <div class="cal-day-header">Sam</div>
+      <div class="cal-day-header">Dim</div>
+    </div>
+  </section>
+
+  <!-- ===================== PARTICIPANTS ===================== -->
+  <section id="tab-participants" class="section">
+    <div class="section-header">
+      <div class="section-title">👶 Infos Participant</div>
+      <div class="section-actions">
+        <button class="btn btn-primary" onclick="openParticipantModal()">➕ Ajouter un participant</button>
+      </div>
+    </div>
+    <div id="participantList"></div>
+    <div id="participantEmpty" class="empty-state">
+      <div class="empty-emoji">🧸</div>
+      <p>Aucun participant pour l'instant.<br>Cliquez sur « Ajouter un participant » pour commencer.</p>
+    </div>
+  </section>
+
+  <!-- ===================== T1 / T2 / T3 (shared render) ===================== -->
+  <section id="tab-t1" class="section"><div id="tContent-t1"></div></section>
+  <section id="tab-t2" class="section"><div id="tContent-t2"></div></section>
+  <section id="tab-t3" class="section"><div id="tContent-t3"></div></section>
+
+  <!-- ===================== SÉANCES 1 ===================== -->
+  <section id="tab-seances1" class="section">
+    <div id="seancesContent1"></div>
+  </section>
+
+  <!-- ===================== SÉANCES 2 ===================== -->
+  <section id="tab-seances2" class="section">
+    <div id="seancesContent2"></div>
+  </section>
+
+</main>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Participant Modal -->
+<div class="modal-overlay" id="participantModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('participantModal')">✕</button>
+    <div class="modal-title">👶 <span id="participantModalTitle">Nouveau participant</span></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Numéro du sujet</label>
+        <input class="form-control" id="pNum" placeholder="ex: S01">
+      </div>
+      <div class="form-group">
+        <label>Nom de famille</label>
+        <input class="form-control" id="pNom" placeholder="Nom">
+      </div>
+      <div class="form-group">
+        <label>Prénom</label>
+        <input class="form-control" id="pPrenom" placeholder="Prénom">
+      </div>
+      <div class="form-group">
+        <label>Ville</label>
+        <input class="form-control" id="pVille" value="Nancy">
+      </div>
+      <div class="form-group">
+        <label>École</label>
+        <input class="form-control" id="pEcole" value="École Maternelle Roberty">
+      </div>
+      <div class="form-group">
+        <label>Langue(s) parlée(s)</label>
+        <input class="form-control" id="pLangues" placeholder="ex: Français, Arabe">
+      </div>
+      <div class="form-group">
+        <label>Langue à la maison</label>
+        <input class="form-control" id="pLangueMaison" placeholder="ex: Français">
+      </div>
+      <div class="form-group">
+        <label>Classe</label>
+        <input class="form-control" id="pClasse" placeholder="ex: MS, GS">
+      </div>
+      <div class="form-group">
+        <label>Enseignant</label>
+        <input class="form-control" id="pEnseignant" placeholder="Nom de l'enseignant">
+      </div>
+      <div class="form-group">
+        <label>Sexe</label>
+        <select class="form-control" id="pSexe">
+          <option value="">—</option>
+          <option>Fille</option>
+          <option>Garçon</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Latéralité</label>
+        <select class="form-control" id="pLat">
+          <option value="">—</option>
+          <option>Droitier</option>
+          <option>Gaucher</option>
+          <option>Ambidextre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Lunettes</label>
+        <select class="form-control" id="pLunettes">
+          <option value="">—</option>
+          <option>Oui</option>
+          <option>Non</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Groupe</label>
+        <select class="form-control" id="pGroupe">
+          <option value="">—</option>
+          <option>EXIMP</option>
+          <option>IMPEX</option>
+        </select>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+      <div>
+        <label class="form-group" style="font-size:0.82rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:6px;">Date de naissance</label>
+        <div style="display:flex;gap:6px;">
+          <input class="form-control" id="pDobJ" placeholder="JJ" maxlength="2" style="width:60px;">
+          <input class="form-control" id="pDobM" placeholder="MM" maxlength="2" style="width:60px;">
+          <input class="form-control" id="pDobA" placeholder="AAAA" maxlength="4" style="flex:1;">
+        </div>
+      </div>
+      <div>
+        <label class="form-group" style="font-size:0.82rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:6px;">Date de passation</label>
+        <div style="display:flex;gap:6px;">
+          <input class="form-control" id="pPassJ" placeholder="JJ" maxlength="2" style="width:60px;">
+          <input class="form-control" id="pPassM" placeholder="MM" maxlength="2" style="width:60px;">
+          <input class="form-control" id="pPassA" placeholder="AAAA" maxlength="4" style="flex:1;">
+        </div>
+      </div>
+    </div>
+    <div id="ageDisplay" class="age-display" style="display:none;margin-bottom:14px;">
+      🎂 <span id="ageText"></span>
+    </div>
+    <div class="form-group" style="margin-bottom:14px;">
+      <label>Sessions ratées / Absences</label>
+      <input class="form-control" id="pAbsences" placeholder="ex: Séance 2 – Implicite, T2">
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <div class="rich-editor" id="pNotesEditor">
+        <div class="rich-toolbar">
+          <button onclick="execCmd('bold','pNotesContent')"><b>G</b></button>
+          <button onclick="execCmd('italic','pNotesContent')"><i>I</i></button>
+          <button onclick="execCmd('underline','pNotesContent')"><u>S</u></button>
+          <button onclick="execCmd('insertUnorderedList','pNotesContent')">• Liste</button>
+          <button onclick="execCmd('insertOrderedList','pNotesContent')">1. Liste</button>
+        </div>
+        <div class="rich-content" id="pNotesContent" contenteditable="true" data-placeholder="Observations libres, remarques cliniques..."></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('participantModal')">Annuler</button>
+      <button class="btn btn-primary" onclick="saveParticipant()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- T Group Modal -->
+<div class="modal-overlay" id="tGroupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('tGroupModal')">✕</button>
+    <div class="modal-title" id="tGroupModalTitle">➕ Nouveau groupe</div>
+
+    <div id="tgDateRow" style="display:none;margin-bottom:16px;">
+      <div class="form-group">
+        <label>Date commune des passations T1/T2/T3</label>
+        <input class="form-control" type="date" id="tgDate">
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-light);margin-top:6px;">Cette date s'applique à toutes les passations du même temps de mesure.</p>
+    </div>
+
+    <div id="tgNomRow" style="margin-bottom:14px;">
+      <div class="form-group">
+        <label>Nom du groupe</label>
+        <input class="form-control" id="tgNom" placeholder="ex: Groupe 1">
+      </div>
+    </div>
+
+    <div id="tgParticipantsRow" style="margin-bottom:14px;">
+      <div class="form-group">
+        <label>Participants</label>
+        <select class="form-control" id="tgParticipantSelect" onchange="addTGroupParticipantFromSelect()">
+          <option value="">— Ajouter un participant —</option>
+        </select>
+        <div class="participants-multi" id="tgParticipantChips" style="margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <div id="tgNotesRow">
+      <div class="form-group">
+        <label>Observations qualitatives</label>
+        <div class="rich-editor">
+          <div class="rich-toolbar">
+            <button onclick="execCmd('bold','tgNotesContent')"><b>G</b></button>
+            <button onclick="execCmd('italic','tgNotesContent')"><i>I</i></button>
+            <button onclick="execCmd('underline','tgNotesContent')"><u>S</u></button>
+            <button onclick="execCmd('insertUnorderedList','tgNotesContent')">• Liste</button>
+            <button onclick="execCmd('insertOrderedList','tgNotesContent')">1. Liste</button>
+          </div>
+          <div class="rich-content" id="tgNotesContent" contenteditable="true" data-placeholder="Observations cliniques, remarques, comportements observés..."></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('tGroupModal')">Annuler</button>
+      <button class="btn btn-primary" onclick="saveTGroupModal()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Seance Group Modal -->
+<div class="modal-overlay" id="seanceGroupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('seanceGroupModal')">✕</button>
+    <div class="modal-title" id="seanceGroupModalTitle">➕ Nouveau groupe</div>
+
+    <div class="form-grid" style="margin-bottom:14px;">
+      <div class="form-group">
+        <label>Nom du groupe</label>
+        <input class="form-control" id="sgNom" placeholder="ex: Groupe 1">
+      </div>
+      <div class="form-group">
+        <label>Date de passation</label>
+        <input class="form-control" type="date" id="sgDate">
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:14px;">
+      <label>Participants</label>
+      <select class="form-control" id="sgParticipantSelect" onchange="addSeanceGroupParticipantFromSelect()">
+        <option value="">— Ajouter un participant —</option>
+      </select>
+      <div class="participants-multi" id="sgParticipantChips" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Observations cliniques</label>
+      <div class="rich-editor">
+        <div class="rich-toolbar">
+          <button onclick="execCmd('bold','sgNotesContent')"><b>G</b></button>
+          <button onclick="execCmd('italic','sgNotesContent')"><i>I</i></button>
+          <button onclick="execCmd('underline','sgNotesContent')"><u>S</u></button>
+          <button onclick="execCmd('insertUnorderedList','sgNotesContent')">• Liste</button>
+          <button onclick="execCmd('insertOrderedList','sgNotesContent')">1. Liste</button>
+        </div>
+        <div class="rich-content" id="sgNotesContent" contenteditable="true" data-placeholder="Observations cliniques détaillées, comportements, notes de terrain..."></div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('seanceGroupModal')">Annuler</button>
+      <button class="btn btn-primary" onclick="saveSeanceGroupModal()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Event Modal -->
+<div class="modal-overlay" id="addEventModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" onclick="closeModal('addEventModal')">✕</button>
+    <div class="modal-title">📅 <span id="eventModalTitle">Nouvel événement</span></div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Intitulé</label>
+      <input class="form-control" id="evTitle" placeholder="ex: Réunion équipe">
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Date</label>
+      <input class="form-control" type="date" id="evDate">
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Type</label>
+      <select class="form-control" id="evType">
+        <option value="custom">Personnalisé</option>
+        <option value="t1">T1</option>
+        <option value="t2">T2</option>
+        <option value="t3">T3</option>
+        <option value="seance">Séance</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addEventModal')">Annuler</button>
+      <button class="btn btn-primary" onclick="saveCalEvent()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:380px;text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">🗑️</div>
+    <div class="modal-title" style="justify-content:center;margin-bottom:10px;" id="confirmTitle">Supprimer ?</div>
+    <p style="color:var(--text-mid);font-size:0.92rem;margin-bottom:20px;" id="confirmText">Cette action est irréversible.</p>
+    <div class="modal-footer" style="justify-content:center;">
+      <button class="btn btn-secondary" onclick="closeModal('confirmModal')">Annuler</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">🗑️ Supprimer</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- SYNC MODALS -->
+<div id="syncSetupModal" style="display:none;position:fixed;inset:0;background:rgba(60,20,90,0.45);backdrop-filter:blur(4px);z-index:600;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:18px;padding:32px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(124,77,255,0.25);border:2px solid #ede0ff;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.25rem;color:#3d2c4e;margin-bottom:6px;">🔗 Synchronisation</div>
+    <p style="font-size:0.86rem;color:#6b5b80;margin-bottom:22px;">Travaillez à deux sur les mêmes données en temps réel.</p>
+    <div style="background:#f5f0ff;border:1.5px solid #ede0ff;border-radius:12px;padding:18px;margin-bottom:14px;">
+      <div style="font-weight:800;font-size:0.88rem;color:#7c4dff;margin-bottom:6px;">✨ Créer un espace partagé</div>
+      <p style="font-size:0.81rem;color:#6b5b80;margin-bottom:12px;">Un code sera généré. Tu l'envoies à ton amie.</p>
+      <button id="createBinBtn" onclick="createSharedSpace()" style="background:linear-gradient(135deg,#ff80aa,#9c6fff);color:white;border:none;border-radius:10px;padding:10px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;width:100%;">🚀 Créer l'espace partagé</button>
+      <div id="createError" style="display:none;margin-top:10px;padding:10px;background:#fff0f3;border:1px solid #ffc0cc;border-radius:8px;font-size:0.80rem;color:#c0305a;"></div>
+    </div>
+    <div style="background:#fff0f5;border:1.5px solid #ffdee9;border-radius:12px;padding:18px;margin-bottom:14px;">
+      <div style="font-weight:800;font-size:0.88rem;color:#e91e63;margin-bottom:6px;">🔑 Rejoindre avec un code</div>
+      <p style="font-size:0.81rem;color:#6b5b80;margin-bottom:10px;">Ton amie t'a envoyé un code ? Colle-le ici :</p>
+      <div style="display:flex;gap:8px;">
+        <input id="joinCodeInput" placeholder="Colle le code ici..." style="flex:1;padding:9px 12px;border:1.5px solid #ffb3cc;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.86rem;outline:none;color:#3d2c4e;">
+        <button onclick="joinSharedSpace()" style="background:#e91e63;color:white;border:none;border-radius:10px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;white-space:nowrap;">Rejoindre</button>
+      </div>
+    </div>
+    <button onclick="document.getElementById('syncSetupModal').style.display='none'" style="background:#f5f0ff;color:#6b5b80;border:1.5px solid #ede0ff;border-radius:10px;padding:9px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.84rem;cursor:pointer;width:100%;">Annuler</button>
+  </div>
+</div>
+
+<div id="syncActiveModal" style="display:none;position:fixed;inset:0;background:rgba(60,20,90,0.45);backdrop-filter:blur(4px);z-index:600;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:18px;padding:32px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(124,77,255,0.25);border:2px solid #ede0ff;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.25rem;color:#3d2c4e;margin-bottom:6px;">✅ Synchronisation active</div>
+    <p style="font-size:0.86rem;color:#1a8055;font-weight:700;margin-bottom:20px;">Les données se synchronisent automatiquement.</p>
+    <div style="background:#f5f0ff;border:1.5px solid #ede0ff;border-radius:12px;padding:18px;margin-bottom:16px;">
+      <div style="font-size:0.80rem;font-weight:700;color:#6b5b80;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">🔑 Code à envoyer à ton amie</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div id="syncCodeDisplay" style="flex:1;background:white;border:1.5px solid #d4b8ff;border-radius:8px;padding:10px 12px;font-family:'Courier New',monospace;font-size:0.78rem;color:#6b35c0;word-break:break-all;min-height:40px;"></div>
+        <button onclick="copyCode()" style="background:#7c4dff;color:white;border:none;border-radius:8px;padding:10px 12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;white-space:nowrap;">📋 Copier</button>
+      </div>
+      <p style="font-size:0.76rem;color:#9e8bac;margin-top:8px;">Envoie ce code par message. Ton amie le colle dans "Rejoindre".</p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('syncActiveModal').style.display='none'" style="flex:1;background:#f5f0ff;color:#6b5b80;border:1.5px solid #ede0ff;border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.84rem;cursor:pointer;">Fermer</button>
+      <button onclick="disconnectSync()" style="background:#fff0f3;color:#e05070;border:1.5px solid #ffc0cc;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.84rem;cursor:pointer;">📴 Déconnecter</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script>
+// ========== UTILS ==========
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+// ========== SYNC via JSONBlob ==========
+// JSONBlob est un service 100% gratuit, sans compte, sans clé API
+// URL publique : https://jsonblob.com/api/jsonBlob
+// Fonctionne depuis n'importe quel navigateur (CORS ouvert)
+
+let BLOB_ID = localStorage.getItem('stageBlobId') || '';
+let SYNC_INTERVAL = null;
+let lastHash = '';
+let isSyncing = false;
+
+function setSyncStatus(status) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  const labels = { ok:'☁️ Sync', saving:'⏳...', error:'⚠️ Erreur', updated:'🔄 Màj!', off:'📴 Local' };
+  const colors =  { ok:'#1a8055', saving:'#a05010', error:'#c0305a', updated:'#6b35c0', off:'#888' };
+  el.textContent = labels[status] || status;
+  el.style.color  = colors[status]  || '#888';
+}
+
+function hash(s) {
+  const str = JSON.stringify(s); let h = 0;
+  for (let i=0;i<str.length;i++) h=(Math.imul(31,h)+str.charCodeAt(i))|0;
+  return h.toString();
+}
+
+async function pushData() {
+  if (!BLOB_ID || isSyncing) return;
+  isSyncing = true; setSyncStatus('saving');
+  try {
+    const r = await fetch(`https://jsonblob.com/api/jsonBlob/${BLOB_ID}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(state)
+    });
+    if (r.ok) { lastHash = hash(state); setSyncStatus('ok'); }
+    else setSyncStatus('error');
+  } catch(e) { setSyncStatus('error'); }
+  isSyncing = false;
+}
+
+async function pullData() {
+  if (!BLOB_ID) return;
+  try {
+    const r = await fetch(`https://jsonblob.com/api/jsonBlob/${BLOB_ID}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!r.ok) return;
+    const remote = await r.json();
+    const h = hash(remote);
+    if (h !== lastHash && h !== hash(state)) {
+      state = remote;
+      localStorage.setItem('stageRechercheData', JSON.stringify(state));
+      lastHash = h;
+      setSyncStatus('updated');
+      refreshAllUI();
+      setTimeout(()=>setSyncStatus('ok'), 2000);
+    }
+  } catch(e) {}
+}
+
+function refreshAllUI() {
+  renderCalendar(); renderParticipants();
+  renderT('t1'); renderT('t2'); renderT('t3');
+  renderSeances('s1','seancesContent1','entre T1 et T2');
+  renderSeances('s2','seancesContent2','entre T2 et T3');
+}
+
+function startSync() {
+  if (SYNC_INTERVAL) clearInterval(SYNC_INTERVAL);
+  SYNC_INTERVAL = setInterval(pullData, 8000);
+}
+
+async function createSharedSpace() {
+  const btn = document.getElementById('createBinBtn');
+  const errDiv = document.getElementById('createError');
+  btn.textContent = '⏳ Création en cours...';
+  btn.disabled = true;
+  errDiv.style.display = 'none';
+  try {
+    const r = await fetch('https://jsonblob.com/api/jsonBlob', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(state)
+    });
+    if (r.ok) {
+      // JSONBlob retourne l'ID dans le header Location : /api/jsonBlob/ID
+      const loc = r.headers.get('Location') || '';
+      BLOB_ID = loc.split('/').pop();
+      if (!BLOB_ID) throw new Error('ID non reçu');
+      localStorage.setItem('stageBlobId', BLOB_ID);
+      lastHash = hash(state);
+      setSyncStatus('ok');
+      startSync();
+      document.getElementById('syncCodeDisplay').textContent = BLOB_ID;
+      document.getElementById('syncSetupModal').style.display = 'none';
+      document.getElementById('syncActiveModal').style.display = 'flex';
+    } else {
+      throw new Error(`Réponse serveur: ${r.status}`);
+    }
+  } catch(e) {
+    btn.textContent = '🚀 Créer l\'espace partagé';
+    btn.disabled = false;
+    errDiv.style.display = 'block';
+    errDiv.textContent = `❌ Erreur : ${e.message}. Vérifie ta connexion et réessaie.`;
+  }
+}
+
+async function joinSharedSpace() {
+  const code = document.getElementById('joinCodeInput').value.trim();
+  if (!code) { alert('Entre le code reçu de ton amie.'); return; }
+  try {
+    const r = await fetch(`https://jsonblob.com/api/jsonBlob/${code}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!r.ok) { alert('Code invalide ou introuvable. Vérifie le code.'); return; }
+    const remote = await r.json();
+    state = remote;
+    BLOB_ID = code;
+    localStorage.setItem('stageBlobId', BLOB_ID);
+    localStorage.setItem('stageRechercheData', JSON.stringify(state));
+    lastHash = hash(state);
+    setSyncStatus('ok');
+    startSync();
+    document.getElementById('syncCodeDisplay').textContent = BLOB_ID;
+    document.getElementById('syncSetupModal').style.display = 'none';
+    document.getElementById('syncActiveModal').style.display = 'flex';
+    refreshAllUI();
+    toast('✅ Connectée ! Données récupérées.');
+  } catch(e) {
+    alert('Erreur de connexion : ' + e.message);
+  }
+}
+
+function disconnectSync() {
+  BLOB_ID = '';
+  localStorage.removeItem('stageBlobId');
+  if (SYNC_INTERVAL) clearInterval(SYNC_INTERVAL);
+  setSyncStatus('off');
+  document.getElementById('syncActiveModal').style.display = 'none';
+  toast('📴 Déconnectée du partage.');
+}
+
+function openSyncModal() {
+  if (BLOB_ID) {
+    document.getElementById('syncCodeDisplay').textContent = BLOB_ID;
+    document.getElementById('syncActiveModal').style.display = 'flex';
+  } else {
+    document.getElementById('syncSetupModal').style.display = 'flex';
+  }
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(BLOB_ID)
+    .then(()=>toast('📋 Code copié !'))
+    .catch(()=>{
+      const el = document.getElementById('syncCodeDisplay');
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      toast('📋 Code copié !');
+    });
+}
+
+// ========== STATE ==========
+let state = {
+  participants: [],
+  calEvents: [],
+  t: { t1:{date:'',groups:[]}, t2:{date:'',groups:[]}, t3:{date:'',groups:[]} },
+  seances: {
+    s1:{ explicite:{s1:{groups:[]},s2:{groups:[]},s3:{groups:[]},s4:{groups:[]}}, implicite:{s1:{groups:[]},s2:{groups:[]},s3:{groups:[]},s4:{groups:[]}} },
+    s2:{ explicite:{s1:{groups:[]},s2:{groups:[]},s3:{groups:[]},s4:{groups:[]}}, implicite:{s1:{groups:[]},s2:{groups:[]},s3:{groups:[]},s4:{groups:[]}} }
+  }
+};
+let editingParticipantId=null, editingCalEventId=null, confirmCallback=null;
+
+try {
+  const saved = localStorage.getItem('stageRechercheData');
+  if (saved) {
+    const loaded = JSON.parse(saved);
+    ['t1','t2','t3'].forEach(tk => {
+      if (loaded.t?.[tk] && !loaded.t[tk].groups) {
+        const old = loaded.t[tk];
+        loaded.t[tk] = { date:old.date||'', groups:[] };
+        if (old.participant||old.notes) loaded.t[tk].groups.push({id:uid(),nom:'Groupe 1',participants:old.participant?[old.participant]:[],notes:old.notes||''});
+      }
+    });
+    ['s1','s2'].forEach(sk=>['explicite','implicite'].forEach(type=>['s1','s2','s3','s4'].forEach(sn=>{
+      const old = loaded.seances?.[sk]?.[type]?.[sn];
+      if (old && !old.groups) {
+        const nd={groups:[]};
+        if (old.date||old.groupe||old.notes||(old.participants?.length)) nd.groups.push({id:uid(),nom:old.groupe||'Groupe 1',date:old.date||'',participants:old.participants||[],notes:old.notes||''});
+        loaded.seances[sk][type][sn]=nd;
+      }
+    })));
+    state = loaded;
+  }
+} catch(e) {}
+
+function saveState() {
+  try { localStorage.setItem('stageRechercheData', JSON.stringify(state)); } catch(e) {}
+  if (BLOB_ID) pushData();
+}
+
+if (BLOB_ID) { setSyncStatus('ok'); startSync(); pullData(); }
+else setSyncStatus('off');
+
+// ===================== UTILS =====================
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  const tabMap = ['calendrier','participants','t1','seances1','t2','seances2','t3'];
+  const idx = tabMap.indexOf(tab);
+  if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+  if (tab === 'calendrier') renderCalendar();
+  if (tab === 'participants') renderParticipants();
+  if (tab === 't1') renderT('t1');
+  if (tab === 't2') renderT('t2');
+  if (tab === 't3') renderT('t3');
+  if (tab === 'seances1') renderSeances('s1', 'seancesContent1', 'entre T1 et T2');
+  if (tab === 'seances2') renderSeances('s2', 'seancesContent2', 'entre T2 et T3');
+}
+
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function confirmDelete(title, text, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmText').textContent = text;
+  confirmCallback = cb;
+  document.getElementById('confirmDeleteBtn').onclick = () => { cb(); closeModal('confirmModal'); };
+  openModal('confirmModal');
+}
+
+function execCmd(cmd, targetId) {
+  document.getElementById(targetId).focus();
+  document.execCommand(cmd, false, null);
+}
+
+function calcAge(dobJ, dobM, dobA, passJ, passM, passA) {
+  if (!dobJ || !dobM || !dobA || !passJ || !passM || !passA) return null;
+  const dob = new Date(+dobA, +dobM-1, +dobJ);
+  const pass = new Date(+passA, +passM-1, +passJ);
+  if (isNaN(dob) || isNaN(pass)) return null;
+  let years = pass.getFullYear() - dob.getFullYear();
+  let months = pass.getMonth() - dob.getMonth();
+  if (months < 0) { years--; months += 12; }
+  if (pass.getDate() < dob.getDate()) months--;
+  if (months < 0) { years--; months += 11; }
+  return `${years} an${years > 1 ? 's' : ''} et ${months} mois`;
+}
+
+// ===================== CALENDAR =====================
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+
+function allCalEvents() {
+  const auto = [];
+  // T sessions: one date shared across all T1/T2/T3 passations
+  ['t1','t2','t3'].forEach(tk => {
+    const td = state.t[tk] || {};
+    if (td.date) {
+      const groups = td.groups || [];
+      const label = tk.toUpperCase() + (groups.length ? ` – ${groups.length} groupe(s)` : '');
+      auto.push({ id: 'auto_'+tk, title: label, date: td.date, type: tk });
+    }
+  });
+  // Seances: dates per group
+  ['s1','s2'].forEach(sk => {
+    const sBlock = state.seances[sk] || {};
+    ['explicite','implicite'].forEach(type => {
+      ['s1','s2','s3','s4'].forEach((sn, si) => {
+        const seanceData = (sBlock[type] || {})[sn] || {};
+        (seanceData.groups || []).forEach(g => {
+          if (g.date) {
+            auto.push({ id: 'auto_'+sk+'_'+type+'_'+sn+'_'+g.id, title: `Séance ${si+1} – ${g.nom||'Groupe'} – ${type.charAt(0).toUpperCase()+type.slice(1)}`, date: g.date, type: 'seance' });
+          }
+        });
+      });
+    });
+  });
+  return [...auto, ...(state.calEvents || [])];
+}
+
+function renderCalendar() {
+  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('calTitle').textContent = months[calMonth] + ' ' + calYear;
+  const grid = document.getElementById('calGrid');
+  // Keep headers (first 7 children)
+  while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+  const firstDay = new Date(calYear, calMonth, 1);
+  let startDow = firstDay.getDay(); // 0=Sun
+  startDow = (startDow + 6) % 7; // Mon=0
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  const today = new Date();
+
+  const events = allCalEvents();
+
+  for (let cell = 0; cell < 42; cell++) {
+    const day = document.createElement('div');
+    day.className = 'cal-day';
+    let dayNum, month, year, isOther = false;
+    if (cell < startDow) {
+      dayNum = daysInPrev - startDow + cell + 1;
+      month = calMonth - 1; year = calYear;
+      if (month < 0) { month = 11; year--; }
+      isOther = true;
+    } else if (cell - startDow >= daysInMonth) {
+      dayNum = cell - startDow - daysInMonth + 1;
+      month = calMonth + 1; year = calYear;
+      if (month > 11) { month = 0; year++; }
+      isOther = true;
+    } else {
+      dayNum = cell - startDow + 1;
+      month = calMonth; year = calYear;
+    }
+    if (isOther) day.classList.add('other-month');
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+    if (!isOther && dayNum === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear()) day.classList.add('today');
+    day.innerHTML = `<div class="cal-day-num">${dayNum}</div>`;
+    // Add events
+    events.filter(e => e.date === dateStr).forEach(ev => {
+      const evDiv = document.createElement('div');
+      evDiv.className = 'cal-event type-' + (ev.type || 'custom');
+      evDiv.textContent = ev.title;
+      evDiv.title = ev.title;
+      if (!ev.id.startsWith('auto_')) {
+        evDiv.style.cursor = 'pointer';
+        evDiv.onclick = (e) => { e.stopPropagation(); editCalEvent(ev.id); };
+      }
+      day.appendChild(evDiv);
+    });
+    day.onclick = () => quickAddEvent(dateStr);
+    grid.appendChild(day);
+  }
+}
+
+function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
+
+function openAddEventModal(dateStr) {
+  editingCalEventId = null;
+  document.getElementById('eventModalTitle').textContent = 'Nouvel événement';
+  document.getElementById('evTitle').value = '';
+  document.getElementById('evDate').value = dateStr || '';
+  document.getElementById('evType').value = 'custom';
+  openModal('addEventModal');
+}
+
+function quickAddEvent(dateStr) { openAddEventModal(dateStr); }
+
+function editCalEvent(id) {
+  const ev = state.calEvents.find(e => e.id === id);
+  if (!ev) return;
+  editingCalEventId = id;
+  document.getElementById('eventModalTitle').textContent = 'Modifier l\'événement';
+  document.getElementById('evTitle').value = ev.title;
+  document.getElementById('evDate').value = ev.date;
+  document.getElementById('evType').value = ev.type || 'custom';
+  openModal('addEventModal');
+}
+
+function saveCalEvent() {
+  const title = document.getElementById('evTitle').value.trim();
+  const date = document.getElementById('evDate').value;
+  const type = document.getElementById('evType').value;
+  if (!title || !date) { toast('⚠️ Titre et date requis'); return; }
+  if (editingCalEventId) {
+    const ev = state.calEvents.find(e => e.id === editingCalEventId);
+    if (ev) { ev.title = title; ev.date = date; ev.type = type; }
+  } else {
+    state.calEvents.push({ id: uid(), title, date, type });
+  }
+  saveState(); closeModal('addEventModal'); renderCalendar();
+  toast(editingCalEventId ? '✏️ Événement modifié !' : '📅 Événement ajouté !');
+}
+
+// ===================== PARTICIPANTS =====================
+function getParticipantName(id) {
+  const p = state.participants.find(p => p.id === id);
+  return p ? `${p.prenom} ${p.nom}` : '?';
+}
+
+function openParticipantModal(id) {
+  editingParticipantId = id || null;
+  document.getElementById('participantModalTitle').textContent = id ? 'Modifier le participant' : 'Nouveau participant';
+  const p = id ? state.participants.find(p => p.id === id) : null;
+  ['pNum','pNom','pPrenom','pVille','pEcole','pLangues','pLangueMaison','pClasse','pEnseignant','pAbsences'].forEach(f => {
+    const key = f.replace('p','').toLowerCase();
+    document.getElementById(f).value = p ? (p[key] || '') : (f==='pVille' ? 'Nancy' : f==='pEcole' ? 'École Maternelle Roberty' : '');
+  });
+  if (p) {
+    document.getElementById('pVille').value = p.ville || 'Nancy';
+    document.getElementById('pEcole').value = p.ecole || 'École Maternelle Roberty';
+  }
+  ['pSexe','pLat','pLunettes','pGroupe'].forEach(f => {
+    const key = f.replace('p','').toLowerCase();
+    document.getElementById(f).value = p ? (p[key] || '') : '';
+  });
+  if (p && p.dob) {
+    const [a,m,j] = (p.dob||'').split('-');
+    document.getElementById('pDobJ').value = j||'';
+    document.getElementById('pDobM').value = m||'';
+    document.getElementById('pDobA').value = a||'';
+  } else {
+    ['pDobJ','pDobM','pDobA'].forEach(f => document.getElementById(f).value = '');
+  }
+  if (p && p.pass) {
+    const [a,m,j] = (p.pass||'').split('-');
+    document.getElementById('pPassJ').value = j||'';
+    document.getElementById('pPassM').value = m||'';
+    document.getElementById('pPassA').value = a||'';
+  } else {
+    ['pPassJ','pPassM','pPassA'].forEach(f => document.getElementById(f).value = '');
+  }
+  document.getElementById('pNotesContent').innerHTML = p ? (p.notes || '') : '';
+  updateAgeDisplay();
+  openModal('participantModal');
+}
+
+function updateAgeDisplay() {
+  const j = document.getElementById('pDobJ').value, m = document.getElementById('pDobM').value, a = document.getElementById('pDobA').value;
+  const pj = document.getElementById('pPassJ').value, pm = document.getElementById('pPassM').value, pa = document.getElementById('pPassA').value;
+  const age = calcAge(j,m,a,pj,pm,pa);
+  const disp = document.getElementById('ageDisplay');
+  if (age) { disp.style.display='flex'; document.getElementById('ageText').textContent = 'Âge à la passation : ' + age; }
+  else disp.style.display='none';
+}
+['pDobJ','pDobM','pDobA','pPassJ','pPassM','pPassA'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', updateAgeDisplay);
+});
+
+function saveParticipant() {
+  const nom = document.getElementById('pNom').value.trim();
+  if (!nom) { toast('⚠️ Nom requis'); return; }
+  const j=document.getElementById('pDobJ').value, m=document.getElementById('pDobM').value, a=document.getElementById('pDobA').value;
+  const pj=document.getElementById('pPassJ').value, pm=document.getElementById('pPassM').value, pa=document.getElementById('pPassA').value;
+  const dob = a&&m&&j ? `${a}-${m.padStart(2,'0')}-${j.padStart(2,'0')}` : '';
+  const pass = pa&&pm&&pj ? `${pa}-${pm.padStart(2,'0')}-${pj.padStart(2,'0')}` : '';
+  const data = {
+    num: document.getElementById('pNum').value.trim(),
+    nom, prenom: document.getElementById('pPrenom').value.trim(),
+    ville: document.getElementById('pVille').value.trim(),
+    ecole: document.getElementById('pEcole').value.trim(),
+    langues: document.getElementById('pLangues').value.trim(),
+    languemaison: document.getElementById('pLangueMaison').value.trim(),
+    classe: document.getElementById('pClasse').value.trim(),
+    enseignant: document.getElementById('pEnseignant').value.trim(),
+    sexe: document.getElementById('pSexe').value,
+    lat: document.getElementById('pLat').value,
+    lunettes: document.getElementById('pLunettes').value,
+    groupe: document.getElementById('pGroupe').value,
+    dob, pass,
+    age: calcAge(j,m,a,pj,pm,pa) || '',
+    absences: document.getElementById('pAbsences').value.trim(),
+    notes: document.getElementById('pNotesContent').innerHTML
+  };
+  if (editingParticipantId) {
+    const idx = state.participants.findIndex(p => p.id === editingParticipantId);
+    if (idx >= 0) state.participants[idx] = { ...state.participants[idx], ...data };
+  } else {
+    state.participants.push({ id: uid(), ...data });
+  }
+  saveState(); closeModal('participantModal'); renderParticipants();
+  refreshAllParticipantSelects();
+  toast(editingParticipantId ? '✏️ Participant modifié !' : '👶 Participant ajouté !');
+}
+
+function renderParticipants() {
+  const list = document.getElementById('participantList');
+  const empty = document.getElementById('participantEmpty');
+  if (!state.participants.length) { list.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  list.innerHTML = state.participants.map(p => `
+    <div class="participant-card">
+      <div class="participant-avatar">🧒</div>
+      <div class="participant-info">
+        <div class="participant-name">${p.num ? `[${p.num}] ` : ''}${p.prenom} ${p.nom}</div>
+        <div class="participant-meta">${[p.classe, p.enseignant, p.age ? '🎂 '+p.age : ''].filter(Boolean).join(' · ')}</div>
+        <div class="participant-meta">${[p.langues, p.lunettes==='Oui'?'👓 Lunettes':'', p.dob?'Né(e) '+p.dob.split('-').reverse().join('/'):''].filter(Boolean).join(' · ')}</div>
+      </div>
+      ${p.groupe ? `<span class="participant-badge badge-${p.groupe.toLowerCase()}">${p.groupe}</span>` : ''}
+      <div class="participant-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openParticipantModal('${p.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteParticipant('${p.id}')">🗑️</button>
+        <button class="btn btn-export btn-sm" onclick="exportParticipantPDF('${p.id}')">📄 PDF</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteParticipant(id) {
+  const p = state.participants.find(p=>p.id===id);
+  confirmDelete('Supprimer ce participant ?', `"${p?.prenom} ${p?.nom}" sera définitivement supprimé.`, () => {
+    state.participants = state.participants.filter(p=>p.id!==id);
+    saveState(); renderParticipants(); refreshAllParticipantSelects();
+    toast('🗑️ Participant supprimé.');
+  });
+}
+
+function getParticipantOptions(selectedId) {
+  return `<option value="">— Choisir —</option>` + state.participants.map(p =>
+    `<option value="${p.id}" ${p.id===selectedId?'selected':''}>${p.prenom} ${p.nom}${p.num?' ('+p.num+')':''}</option>`
+  ).join('');
+}
+
+// ===================== T SESSIONS =====================
+// Shared date modal state
+let tModalState = { tk: null, groupId: null };
+
+function renderT(tk) {
+  const label = tk.toUpperCase();
+  const data = state.t[tk] || { date: '', groups: [] };
+  if (!data.groups) data.groups = [];
+  const container = document.getElementById('tContent-' + tk);
+
+  const groupsHtml = data.groups.map(g => renderTGroupCard(tk, g)).join('');
+  const emptyHtml = data.groups.length === 0 ? `
+    <div class="empty-state">
+      <div class="empty-emoji">📋</div>
+      <p>Aucun groupe pour l'instant.<br>Cliquez sur « Ajouter un groupe » pour commencer.</p>
+    </div>` : '';
+
+  container.innerHTML = `
+    <div class="section-header">
+      <div class="section-title">📝 ${label}</div>
+      <div class="section-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openTDateModal('${tk}')">📅 Date des passations ${label} : ${data.date ? data.date.split('-').reverse().join('/') : '—'}</button>
+        <button class="btn btn-primary" onclick="openTGroupModal('${tk}', null)">➕ Ajouter un groupe</button>
+        <button class="btn btn-export btn-sm" onclick="exportTPDF('${tk}')">📄 Exporter PDF</button>
+      </div>
+    </div>
+    <div id="tGroups-${tk}">
+      ${groupsHtml}
+      ${emptyHtml}
+    </div>
+  `;
+}
+
+function renderTGroupCard(tk, g) {
+  const pNames = (g.participants || []).map(pid => getParticipantName(pid)).join(', ') || '—';
+  const data = state.t[tk] || {};
+  return `
+    <div class="card card-violet" style="margin-bottom:14px;" id="tgroup-${tk}-${g.id}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--violet-500);">👥 ${g.nom || 'Groupe sans nom'}</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-secondary btn-sm" onclick="openTGroupModal('${tk}','${g.id}')">✏️ Modifier</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteTGroup('${tk}','${g.id}')">🗑️</button>
+          <button class="btn btn-export btn-sm" onclick="exportTGroupPDF('${tk}','${g.id}')">📄 PDF</button>
+        </div>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-mid);margin-bottom:6px;">📅 Date : <b>${data.date ? data.date.split('-').reverse().join('/') : '—'}</b> &nbsp;·&nbsp; 👶 Participants : <b>${pNames}</b></div>
+      ${g.notes ? `<div style="margin-top:8px;background:white;border:1.5px solid var(--violet-100);border-radius:8px;padding:10px 14px;font-size:0.88rem;line-height:1.6;">${g.notes}</div>` : ''}
+    </div>
+  `;
+}
+
+function openTDateModal(tk) {
+  tModalState = { tk, groupId: null, mode: 'date' };
+  const data = state.t[tk] || {};
+  document.getElementById('tGroupModalTitle').textContent = `📅 Date des passations ${tk.toUpperCase()}`;
+  document.getElementById('tgDateRow').style.display = '';
+  document.getElementById('tgNomRow').style.display = 'none';
+  document.getElementById('tgParticipantsRow').style.display = 'none';
+  document.getElementById('tgNotesRow').style.display = 'none';
+  document.getElementById('tgDate').value = data.date || '';
+  openModal('tGroupModal');
+}
+
+function openTGroupModal(tk, groupId) {
+  tModalState = { tk, groupId, mode: 'group' };
+  const data = state.t[tk] || { date:'', groups:[] };
+  const g = groupId ? (data.groups||[]).find(x=>x.id===groupId) : null;
+  document.getElementById('tGroupModalTitle').textContent = groupId ? `✏️ Modifier le groupe` : `➕ Nouveau groupe – ${tk.toUpperCase()}`;
+  document.getElementById('tgDateRow').style.display = 'none';
+  document.getElementById('tgNomRow').style.display = '';
+  document.getElementById('tgParticipantsRow').style.display = '';
+  document.getElementById('tgNotesRow').style.display = '';
+  document.getElementById('tgNom').value = g ? g.nom : '';
+  // Participants chips
+  renderTGroupParticipantChips(tk, g ? g.participants : []);
+  document.getElementById('tgParticipantSelect').innerHTML = getParticipantOptions('');
+  document.getElementById('tgNotesContent').innerHTML = g ? (g.notes || '') : '';
+  openModal('tGroupModal');
+}
+
+function renderTGroupParticipantChips(tk, selected) {
+  const chips = document.getElementById('tgParticipantChips');
+  chips.innerHTML = (selected||[]).map(pid => {
+    const p = state.participants.find(p=>p.id===pid);
+    return p ? `<div class="participant-chip">${p.prenom} ${p.nom} <button class="remove-chip" onclick="removeTGroupParticipant('${pid}')">✕</button></div>` : '';
+  }).join('');
+}
+
+function addTGroupParticipantFromSelect() {
+  const sel = document.getElementById('tgParticipantSelect');
+  const pid = sel.value;
+  if (!pid) return;
+  const chips = document.getElementById('tgParticipantChips');
+  const existing = Array.from(chips.querySelectorAll('.participant-chip')).map(c => c.dataset.pid);
+  // get current list from chips
+  const currentIds = Array.from(chips.querySelectorAll('.participant-chip')).map(c => {
+    const btn = c.querySelector('.remove-chip');
+    const match = btn.getAttribute('onclick').match(/'([^']+)'\)/);
+    return match ? match[1] : null;
+  }).filter(Boolean);
+  if (currentIds.includes(pid)) return;
+  const p = state.participants.find(p=>p.id===pid);
+  if (!p) return;
+  const chip = document.createElement('div');
+  chip.className = 'participant-chip';
+  chip.innerHTML = `${p.prenom} ${p.nom} <button class="remove-chip" onclick="removeTGroupParticipant('${pid}')">✕</button>`;
+  chips.appendChild(chip);
+  sel.value = '';
+}
+
+function removeTGroupParticipant(pid) {
+  const chips = document.getElementById('tgParticipantChips');
+  chips.querySelectorAll('.participant-chip').forEach(c => {
+    const btn = c.querySelector('.remove-chip');
+    if (btn && btn.getAttribute('onclick').includes(`'${pid}'`)) c.remove();
+  });
+}
+
+function saveTGroupModal() {
+  const { tk, groupId, mode } = tModalState;
+  if (!state.t[tk]) state.t[tk] = { date:'', groups:[] };
+  if (!state.t[tk].groups) state.t[tk].groups = [];
+
+  if (mode === 'date') {
+    state.t[tk].date = document.getElementById('tgDate').value;
+    saveState(); closeModal('tGroupModal'); renderT(tk); renderCalendar();
+    toast('📅 Date enregistrée !');
+    return;
+  }
+
+  const nom = document.getElementById('tgNom').value.trim();
+  if (!nom) { toast('⚠️ Nom du groupe requis'); return; }
+  // Collect participants from chips
+  const chips = document.getElementById('tgParticipantChips');
+  const participants = Array.from(chips.querySelectorAll('.participant-chip')).map(c => {
+    const btn = c.querySelector('.remove-chip');
+    const match = btn.getAttribute('onclick').match(/'([^']+)'\)/);
+    return match ? match[1] : null;
+  }).filter(Boolean);
+  const notes = document.getElementById('tgNotesContent').innerHTML;
+
+  if (groupId) {
+    const g = state.t[tk].groups.find(x=>x.id===groupId);
+    if (g) { g.nom = nom; g.participants = participants; g.notes = notes; }
+  } else {
+    state.t[tk].groups.push({ id: uid(), nom, participants, notes });
+  }
+  saveState(); closeModal('tGroupModal'); renderT(tk); renderCalendar();
+  toast(groupId ? '✏️ Groupe modifié !' : '👥 Groupe ajouté !');
+}
+
+function deleteTGroup(tk, groupId) {
+  const g = (state.t[tk]?.groups || []).find(x=>x.id===groupId);
+  confirmDelete('Supprimer ce groupe ?', `"${g?.nom}" sera définitivement supprimé.`, () => {
+    state.t[tk].groups = (state.t[tk].groups || []).filter(x=>x.id!==groupId);
+    saveState(); renderT(tk); toast('🗑️ Groupe supprimé.');
+  });
+}
+
+function saveT(tk) {
+  // kept for calendar compat
+  saveState(); renderCalendar();
+}
+
+function saveTNotes(tk) {
+  saveState();
+}
+
+// ===================== SÉANCES =====================
+const SEANCE_DATA = {
+  explicite: [
+    { num: 1, items: 'B F A I', label: 'Entraînement 4 lettres' },
+    { num: 2, items: 'S T O U', label: 'Entraînement 4 lettres' },
+    { num: 3, items: 'B S I O', label: 'Entraînement 4 lettres' },
+    { num: 4, items: 'F T U A', label: 'Entraînement 4 lettres' },
+  ],
+  implicite: [
+    { num: 1, items: 'BA BI FA FI', label: 'Entraînement 4 syllabes' },
+    { num: 2, items: 'SO SU TO TU', label: 'Entraînement 4 syllabes' },
+    { num: 3, items: 'BA BI SO SU', label: 'Entraînement 4 syllabes' },
+    { num: 4, items: 'FA FI TO TU', label: 'Entraînement 4 syllabes' },
+  ]
+};
+
+let seanceModalState = { sk: null, type: null, sn: null, groupId: null };
+
+function renderSeances(sk, containerId, blockLabel) {
+  const container = document.getElementById(containerId);
+  const activeType = (container._activeType) || 'explicite';
+  const activeSeance = (container._activeSeance) || 's1';
+
+  container.innerHTML = `
+    <div class="section-header">
+      <div class="section-title">🎯 Séances <span style="font-size:0.75rem;font-weight:400;color:var(--text-light);margin-left:6px;">${blockLabel}</span></div>
+      <button class="btn btn-export btn-sm" onclick="exportSeanceBlockPDF('${sk}')">📄 Exporter PDF</button>
+    </div>
+    <div class="sub-tabs" id="${sk}_typeTab">
+      <button class="sub-tab-btn ${activeType==='explicite'?'active':''}" onclick="setSeanceType('${sk}','explicite','${containerId}')">📘 Explicite</button>
+      <button class="sub-tab-btn ${activeType==='implicite'?'active':''}" onclick="setSeanceType('${sk}','implicite','${containerId}')">🎵 Implicite</button>
+    </div>
+    ${renderSeanceTypeContent(sk, activeType, activeSeance, containerId)}
+  `;
+}
+
+function setSeanceType(sk, type, containerId) {
+  const container = document.getElementById(containerId);
+  container._activeType = type;
+  container._activeSeance = 's1';
+  renderSeances(sk, containerId, sk==='s1'?'entre T1 et T2':'entre T2 et T3');
+}
+
+function setSeanceNum(sk, type, sn, containerId) {
+  const container = document.getElementById(containerId);
+  container._activeType = type;
+  container._activeSeance = sn;
+  renderSeances(sk, containerId, sk==='s1'?'entre T1 et T2':'entre T2 et T3');
+}
+
+function renderSeanceTypeContent(sk, type, activeSn, containerId) {
+  const seances = SEANCE_DATA[type];
+  const snKeys = ['s1','s2','s3','s4'];
+  const tabs = seances.map((s,i) => `
+    <button class="sub-tab-btn ${activeSn===snKeys[i]?'active':''}" 
+      onclick="setSeanceNum('${sk}','${type}','${snKeys[i]}','${containerId}')">
+      Séance ${s.num}
+    </button>
+  `).join('');
+
+  const si = snKeys.indexOf(activeSn);
+  const sInfo = seances[si] || seances[0];
+  const seanceData = ((state.seances[sk]||{})[type]||{})[activeSn] || { groups: [] };
+  const groups = seanceData.groups || [];
+
+  const groupsHtml = groups.map(g => renderSeanceGroupCard(sk, type, activeSn, g, sInfo)).join('');
+  const emptyHtml = groups.length === 0 ? `
+    <div class="empty-state">
+      <div class="empty-emoji">🎯</div>
+      <p>Aucun groupe pour cette séance.<br>Cliquez sur « Ajouter un groupe » pour commencer.</p>
+    </div>` : '';
+
+  return `
+    <div class="sub-tabs">${tabs}</div>
+    <div class="seance-info-tag">🎯 ${type.charAt(0).toUpperCase()+type.slice(1)} – Séance ${sInfo.num}</div>
+    <div class="seance-items-tag" style="margin-bottom:14px;">${sInfo.label} : ${sInfo.items}</div>
+    <div style="margin-bottom:14px;">
+      <button class="btn btn-primary" onclick="openSeanceGroupModal('${sk}','${type}','${activeSn}',null,'${containerId}')">➕ Ajouter un groupe</button>
+    </div>
+    <div id="seance-groups-${sk}-${type}-${activeSn}">
+      ${groupsHtml}
+      ${emptyHtml}
+    </div>
+  `;
+}
+
+function renderSeanceGroupCard(sk, type, sn, g, sInfo) {
+  const pNames = (g.participants || []).map(pid => getParticipantName(pid)).join(', ') || '—';
+  const snKeys = ['s1','s2','s3','s4'];
+  const si = snKeys.indexOf(sn);
+  return `
+    <div class="card card-violet" style="margin-bottom:14px;" id="sgroup-${sk}-${type}-${sn}-${g.id}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--violet-500);">👥 ${g.nom || 'Groupe sans nom'}</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-secondary btn-sm" onclick="openSeanceGroupModal('${sk}','${type}','${sn}','${g.id}',null)">✏️ Modifier</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSeanceGroup('${sk}','${type}','${sn}','${g.id}')">🗑️</button>
+          <button class="btn btn-export btn-sm" onclick="exportSeanceGroupPDF('${sk}','${type}','${sn}','${g.id}')">📄 PDF</button>
+        </div>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-mid);margin-bottom:6px;">📅 Date : <b>${g.date ? g.date.split('-').reverse().join('/') : '—'}</b> &nbsp;·&nbsp; 👶 Participants : <b>${pNames}</b></div>
+      ${g.notes ? `<div style="margin-top:8px;background:white;border:1.5px solid var(--violet-100);border-radius:8px;padding:10px 14px;font-size:0.88rem;line-height:1.6;">${g.notes}</div>` : ''}
+    </div>
+  `;
+}
+
+function openSeanceGroupModal(sk, type, sn, groupId, containerId) {
+  const snKeys = ['s1','s2','s3','s4'];
+  const si = snKeys.indexOf(sn);
+  const sInfo = SEANCE_DATA[type][si] || SEANCE_DATA[type][0];
+  seanceModalState = { sk, type, sn, groupId };
+  const seanceData = ((state.seances[sk]||{})[type]||{})[sn] || { groups: [] };
+  const g = groupId ? (seanceData.groups||[]).find(x=>x.id===groupId) : null;
+  document.getElementById('seanceGroupModalTitle').textContent = groupId ? `✏️ Modifier le groupe` : `➕ Nouveau groupe – Séance ${sInfo.num} ${type.charAt(0).toUpperCase()+type.slice(1)}`;
+  document.getElementById('sgNom').value = g ? g.nom : '';
+  document.getElementById('sgDate').value = g ? (g.date || '') : '';
+  document.getElementById('sgParticipantSelect').innerHTML = getParticipantOptions('');
+  renderSeanceGroupParticipantChips(g ? g.participants : []);
+  document.getElementById('sgNotesContent').innerHTML = g ? (g.notes || '') : '';
+  openModal('seanceGroupModal');
+}
+
+function renderSeanceGroupParticipantChips(selected) {
+  const chips = document.getElementById('sgParticipantChips');
+  chips.innerHTML = (selected||[]).map(pid => {
+    const p = state.participants.find(p=>p.id===pid);
+    return p ? `<div class="participant-chip">${p.prenom} ${p.nom} <button class="remove-chip" onclick="removeSeanceGroupParticipant('${pid}')">✕</button></div>` : '';
+  }).join('');
+}
+
+function addSeanceGroupParticipantFromSelect() {
+  const sel = document.getElementById('sgParticipantSelect');
+  const pid = sel.value;
+  if (!pid) return;
+  const chips = document.getElementById('sgParticipantChips');
+  const existing = Array.from(chips.querySelectorAll('.remove-chip')).map(b => {
+    const m = b.getAttribute('onclick').match(/'([^']+)'\)/);
+    return m ? m[1] : null;
+  }).filter(Boolean);
+  if (existing.includes(pid)) return;
+  const p = state.participants.find(p=>p.id===pid);
+  if (!p) return;
+  const chip = document.createElement('div');
+  chip.className = 'participant-chip';
+  chip.innerHTML = `${p.prenom} ${p.nom} <button class="remove-chip" onclick="removeSeanceGroupParticipant('${pid}')">✕</button>`;
+  chips.appendChild(chip);
+  sel.value = '';
+}
+
+function removeSeanceGroupParticipant(pid) {
+  const chips = document.getElementById('sgParticipantChips');
+  chips.querySelectorAll('.participant-chip').forEach(c => {
+    const btn = c.querySelector('.remove-chip');
+    if (btn && btn.getAttribute('onclick').includes(`'${pid}'`)) c.remove();
+  });
+}
+
+function saveSeanceGroupModal() {
+  const { sk, type, sn, groupId } = seanceModalState;
+  const nom = document.getElementById('sgNom').value.trim();
+  if (!nom) { toast('⚠️ Nom du groupe requis'); return; }
+  const date = document.getElementById('sgDate').value;
+  const chips = document.getElementById('sgParticipantChips');
+  const participants = Array.from(chips.querySelectorAll('.remove-chip')).map(b => {
+    const m = b.getAttribute('onclick').match(/'([^']+)'\)/);
+    return m ? m[1] : null;
+  }).filter(Boolean);
+  const notes = document.getElementById('sgNotesContent').innerHTML;
+
+  if (!state.seances[sk]) state.seances[sk] = {};
+  if (!state.seances[sk][type]) state.seances[sk][type] = {};
+  if (!state.seances[sk][type][sn]) state.seances[sk][type][sn] = { groups: [] };
+  if (!state.seances[sk][type][sn].groups) state.seances[sk][type][sn].groups = [];
+
+  if (groupId) {
+    const g = state.seances[sk][type][sn].groups.find(x=>x.id===groupId);
+    if (g) { g.nom = nom; g.date = date; g.participants = participants; g.notes = notes; }
+  } else {
+    state.seances[sk][type][sn].groups.push({ id: uid(), nom, date, participants, notes });
+  }
+  saveState();
+  closeModal('seanceGroupModal');
+  const containerId = sk==='s1'?'seancesContent1':'seancesContent2';
+  renderSeances(sk, containerId, sk==='s1'?'entre T1 et T2':'entre T2 et T3');
+  renderCalendar();
+  toast(groupId ? '✏️ Groupe modifié !' : '👥 Groupe ajouté !');
+}
+
+function deleteSeanceGroup(sk, type, sn, groupId) {
+  const g = ((state.seances[sk]||{})[type]||{})[sn]?.groups?.find(x=>x.id===groupId);
+  confirmDelete('Supprimer ce groupe ?', `"${g?.nom}" sera définitivement supprimé.`, () => {
+    state.seances[sk][type][sn].groups = (state.seances[sk][type][sn].groups||[]).filter(x=>x.id!==groupId);
+    saveState();
+    const containerId = sk==='s1'?'seancesContent1':'seancesContent2';
+    renderSeances(sk, containerId, sk==='s1'?'entre T1 et T2':'entre T2 et T3');
+    renderCalendar();
+    toast('🗑️ Groupe supprimé.');
+  });
+}
+
+// ===================== REFRESH SELECTS =====================
+function refreshAllParticipantSelects() {
+  // No static selects in T tabs anymore; re-render if needed
+}
+
+// ===================== PDF EXPORT =====================
+function downloadPDF(htmlContent, filename) {
+  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename + '.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+  toast('📄 PDF prêt au téléchargement !');
+}
+
+function exportParticipantPDF(id) {
+  const p = state.participants.find(p=>p.id===id);
+  if (!p) return;
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${p.prenom} ${p.nom}</title>
+  <style>body{font-family:sans-serif;padding:30px;max-width:700px;} h1{color:#7c4dff;} table{border-collapse:collapse;width:100%;margin:12px 0;} td{padding:6px 12px;border:1px solid #e0d0f0;} .label{font-weight:bold;background:#f5f0ff;width:160px;} .notes{background:#fff9fe;border:1px solid #e0d0f0;padding:12px;border-radius:8px;margin-top:12px;}</style>
+  </head><body>
+  <h1>👶 Fiche Participant – ${p.prenom} ${p.nom}</h1>
+  <table>
+    <tr><td class="label">Numéro</td><td>${p.num||'-'}</td></tr>
+    <tr><td class="label">Nom</td><td>${p.nom}</td></tr>
+    <tr><td class="label">Prénom</td><td>${p.prenom}</td></tr>
+    <tr><td class="label">École</td><td>${p.ecole||'-'}</td></tr>
+    <tr><td class="label">Ville</td><td>${p.ville||'-'}</td></tr>
+    <tr><td class="label">Classe</td><td>${p.classe||'-'}</td></tr>
+    <tr><td class="label">Enseignant</td><td>${p.enseignant||'-'}</td></tr>
+    <tr><td class="label">Date de naissance</td><td>${p.dob?p.dob.split('-').reverse().join('/'):'–'}</td></tr>
+    <tr><td class="label">Date de passation</td><td>${p.pass?p.pass.split('-').reverse().join('/'):'–'}</td></tr>
+    <tr><td class="label">Âge à la passation</td><td>${p.age||'–'}</td></tr>
+    <tr><td class="label">Sexe</td><td>${p.sexe||'–'}</td></tr>
+    <tr><td class="label">Latéralité</td><td>${p.lat||'–'}</td></tr>
+    <tr><td class="label">Lunettes</td><td>${p.lunettes||'–'}</td></tr>
+    <tr><td class="label">Groupe</td><td>${p.groupe||'–'}</td></tr>
+    <tr><td class="label">Langues</td><td>${p.langues||'–'}</td></tr>
+    <tr><td class="label">Langue maison</td><td>${p.languemaison||'–'}</td></tr>
+    <tr><td class="label">Absences</td><td>${p.absences||'–'}</td></tr>
+  </table>
+  <h3>Notes</h3>
+  <div class="notes">${p.notes||'–'}</div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`;
+  downloadPDF(html, `participant-${p.prenom}-${p.nom}`);
+}
+
+function exportTPDF(tk) {
+  const data = state.t[tk] || {};
+  const groups = data.groups || [];
+  const groupsHtml = groups.length ? groups.map(g => {
+    const pNames = (g.participants||[]).map(pid=>getParticipantName(pid)).join(', ')||'–';
+    return `<h3 style="color:#6b35c0;">👥 ${g.nom}</h3>
+    <table><tr><td class="label">Participants</td><td>${pNames}</td></tr></table>
+    <div class="notes">${g.notes||'–'}</div>`;
+  }).join('<hr>') : '<p>Aucun groupe.</p>';
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${tk.toUpperCase()}</title>
+  <style>body{font-family:sans-serif;padding:30px;max-width:700px;} h1{color:#7c4dff;} h3{color:#6b35c0;} table{border-collapse:collapse;width:100%;margin:12px 0;} td{padding:6px 12px;border:1px solid #e0d0f0;} .label{font-weight:bold;background:#f5f0ff;width:160px;} .notes{background:#fff9fe;border:1px solid #e0d0f0;padding:12px;border-radius:8px;margin-top:12px;} hr{border:1px solid #e0d0f0;margin:20px 0;}</style>
+  </head><body>
+  <h1>📝 ${tk.toUpperCase()} – Stage Recherche</h1>
+  <table><tr><td class="label">Date des passations</td><td>${data.date?data.date.split('-').reverse().join('/'):'–'}</td></tr></table>
+  <h2 style="color:#c0305a;margin-top:20px;">Groupes</h2>
+  ${groupsHtml}
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`;
+  downloadPDF(html, `${tk}-passation`);
+}
+
+function exportTGroupPDF(tk, groupId) {
+  const data = state.t[tk] || {};
+  const g = (data.groups||[]).find(x=>x.id===groupId);
+  if (!g) return;
+  const pNames = (g.participants||[]).map(pid=>getParticipantName(pid)).join(', ')||'–';
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${tk.toUpperCase()} – ${g.nom}</title>
+  <style>body{font-family:sans-serif;padding:30px;max-width:700px;} h1{color:#7c4dff;} table{border-collapse:collapse;width:100%;margin:12px 0;} td{padding:6px 12px;border:1px solid #e0d0f0;} .label{font-weight:bold;background:#f5f0ff;width:160px;} .notes{background:#fff9fe;border:1px solid #e0d0f0;padding:12px;border-radius:8px;margin-top:12px;}</style>
+  </head><body>
+  <h1>📝 ${tk.toUpperCase()} – ${g.nom}</h1>
+  <table>
+    <tr><td class="label">Date des passations</td><td>${data.date?data.date.split('-').reverse().join('/'):'–'}</td></tr>
+    <tr><td class="label">Participants</td><td>${pNames}</td></tr>
+  </table>
+  <h3>Observations qualitatives</h3>
+  <div class="notes">${g.notes||'–'}</div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`;
+  downloadPDF(html, `${tk}-${g.nom.replace(/\s+/g,'-')}`);
+}
+
+function exportSeanceGroupPDF(sk, type, sn, groupId) {
+  const seanceData = ((state.seances[sk]||{})[type]||{})[sn] || {};
+  const g = (seanceData.groups||[]).find(x=>x.id===groupId);
+  if (!g) return;
+  const snKeys = ['s1','s2','s3','s4'];
+  const si = snKeys.indexOf(sn);
+  const sInfo = SEANCE_DATA[type][si]||SEANCE_DATA[type][0];
+  const pNames = (g.participants||[]).map(pid=>getParticipantName(pid)).join(', ')||'–';
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Séance ${sInfo.num} ${type} – ${g.nom}</title>
+  <style>body{font-family:sans-serif;padding:30px;max-width:700px;} h1{color:#7c4dff;} table{border-collapse:collapse;width:100%;margin:12px 0;} td{padding:6px 12px;border:1px solid #e0d0f0;} .label{font-weight:bold;background:#f5f0ff;width:160px;} .notes{background:#fff9fe;border:1px solid #e0d0f0;padding:12px;border-radius:8px;margin-top:12px;} .tag{display:inline-block;background:#e8d5ff;color:#6b35c0;padding:4px 12px;border-radius:6px;font-weight:bold;font-size:1.1em;margin-bottom:10px;}</style>
+  </head><body>
+  <h1>🎯 Séance ${sInfo.num} – ${type.charAt(0).toUpperCase()+type.slice(1)} – ${g.nom}</h1>
+  <div class="tag">${sInfo.label} : ${sInfo.items}</div>
+  <table>
+    <tr><td class="label">Bloc</td><td>${sk==='s1'?'Entre T1 et T2':'Entre T2 et T3'}</td></tr>
+    <tr><td class="label">Date</td><td>${g.date?g.date.split('-').reverse().join('/'):'–'}</td></tr>
+    <tr><td class="label">Participants</td><td>${pNames}</td></tr>
+  </table>
+  <h3>Observations cliniques</h3>
+  <div class="notes">${g.notes||'–'}</div>
+  <script>window.onload=()=>window.print()<\/script>
+  </body></html>`;
+  downloadPDF(html, `seance${sInfo.num}-${type}-${g.nom.replace(/\s+/g,'-')}`);
+}
+
+function exportSeanceBlockPDF(sk) {
+  let body = `<h1>🎯 Bloc Séances – ${sk==='s1'?'entre T1 et T2':'entre T2 et T3'}</h1>`;
+  ['explicite','implicite'].forEach(type => {
+    body += `<h2>${type.charAt(0).toUpperCase()+type.slice(1)}</h2>`;
+    ['s1','s2','s3','s4'].forEach((sn,si) => {
+      const sInfo = SEANCE_DATA[type][si];
+      const seanceData = ((state.seances[sk]||{})[type]||{})[sn] || {};
+      const groups = seanceData.groups || [];
+      body += `<h3>Séance ${sInfo.num} – <span class="tag">${sInfo.label} : ${sInfo.items}</span></h3>`;
+      if (groups.length) {
+        groups.forEach(g => {
+          const pNames = (g.participants||[]).map(pid=>getParticipantName(pid)).join(', ')||'–';
+          body += `<h4 style="color:#6b35c0;">👥 ${g.nom}</h4>
+          <table>
+            <tr><td class="label">Date</td><td>${g.date?g.date.split('-').reverse().join('/'):'–'}</td></tr>
+            <tr><td class="label">Participants</td><td>${pNames}</td></tr>
+          </table>
+          <div class="notes">${g.notes||'–'}</div>`;
+        });
+      } else {
+        body += '<p style="color:#aaa;">Aucun groupe.</p>';
+      }
+      body += '<hr>';
+    });
+  });
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Séances ${sk}</title>
+  <style>body{font-family:sans-serif;padding:30px;max-width:700px;} h1{color:#7c4dff;} h2{color:#c0305a;margin-top:30px;} h3{color:#6b35c0;} h4{color:#3d2c4e;margin:8px 0 4px;} table{border-collapse:collapse;width:100%;margin:12px 0;} td{padding:6px 12px;border:1px solid #e0d0f0;} .label{font-weight:bold;background:#f5f0ff;width:160px;} .notes{background:#fff9fe;border:1px solid #e0d0f0;padding:12px;border-radius:8px;margin:8px 0;} .tag{display:inline-block;background:#e8d5ff;color:#6b35c0;padding:2px 10px;border-radius:4px;font-weight:bold;} hr{border:1px solid #e0d0f0;margin:20px 0;}</style>
+  </head><body>${body}<script>window.onload=()=>window.print()<\/script></body></html>`;
+  downloadPDF(html, `seances-${sk}`);
+}
+
+// ===================== INIT =====================
+renderCalendar();
+renderParticipants();
+renderT('t1');
+renderT('t2');
+renderT('t3');
+renderSeances('s1','seancesContent1','entre T1 et T2');
+renderSeances('s2','seancesContent2','entre T2 et T3');
+</script>
+</body>
+</html>
